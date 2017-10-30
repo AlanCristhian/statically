@@ -1,7 +1,7 @@
 statically
 ==========
 
-Compiles a function or class with cython. Use annotations for static type
+Compiles a function or class with Cython. Use annotations for static type
 declarations.
 
 Python 3.6+ is required.
@@ -45,8 +45,8 @@ Caveats
 Contribute
 ----------
 
-Im not native english speaker, so you can helpme with the documentation.
-Also I not convinced about the module name. The ``typed`` decorator can
+I am not a native english speaker, so you can help me with the documentation.
+Also I am not convinced about the module name. The `typed` decorator can
 compile functions or classes without type declarations.
 
-Feel free to sendme a pull request or open an issue.
+Feel free to send me a pull request or open an issue.
