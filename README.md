@@ -1,9 +1,9 @@
 # statically
 
-Compiles a function or class with [Cython](https://www.cython.org). Use annotations for static type
+Compiles a function or class with [Cython](http://www.cython.org). Use annotations for static type
 declarations.
 
-Python 3.6+ is required.
+Python 3.5+ is required.
 
 To compile, you must decorate the function or class with `typed`. Example:
 
@@ -43,7 +43,7 @@ $ pip install git+https://github.com/AlanCristhian/statically.git
 - Async generators are not supported.
 - Won't work with IDLE, neither with REPL.
 
-## Help me
+## Contribute
 
 I am not a native english speaker, so you can help me with the documentation.
 Also I am not convinced about the module name. The `typed` decorator can

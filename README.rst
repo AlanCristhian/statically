@@ -1,12 +1,11 @@
 statically
 ==========
 
-Compiles a function or class with Cython. Use annotations for static type
-declarations.
+Compiles a function or class with `Cython <http://www.cython.org>`_. Use annotations for static type declarations.
 
-Python 3.6+ is required.
+Python 3.5+ is required.
 
-To compile, you must decorate the function or class with ``typed``. Example:
+To compile, you must decorate the function or class with ``typed``. Example: ::
 
     import cython
     import statically

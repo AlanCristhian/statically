@@ -3,12 +3,12 @@
 from setuptools import setup
 from sys import version_info
 
-assert version_info >= (3, 6), \
-"Python 3.6+ is required. Got %s.%s" % (version_info.major, version_info.minor)
+assert version_info >= (3, 5), \
+"Python 3.5+ is required. Got %s.%s" % (version_info.major, version_info.minor)
 
 setup(
     name="statically",
-    version="1.0a1",
+    version="1.0a2",
     py_modules=["statically"],
     zip_safe=True,
     author="Alan Cristhian",
