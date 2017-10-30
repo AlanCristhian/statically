@@ -3,8 +3,8 @@
 from setuptools import setup
 from sys import version_info
 
-assert version_info >= (3, 5), \
-"Python 3.5+ is required. Got %s.%s" % (version_info.major, version_info.minor)
+assert version_info >= (3,), \
+"Python 3 is required. Got %s.%s" % (version_info.major, version_info.minor)
 
 setup(
     name="statically",

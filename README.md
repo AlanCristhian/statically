@@ -3,7 +3,7 @@
 Compiles a function or class with [Cython](http://www.cython.org). Use annotations for static type
 declarations.
 
-Python 3.5+ is required.
+Python 3 is required.
 
 To compile, you must decorate the function or class with `typed`. Example:
 
