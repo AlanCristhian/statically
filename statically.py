@@ -6,7 +6,7 @@ import cython
 
 
 __all__ = ["typed"]
-__version__ = "1.0a1"
+__version__ = "1.0a2"
 
 
 # async generators only present in Python 3.6+
