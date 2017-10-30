@@ -39,7 +39,7 @@ Installation
 Caveats
 -------
 
-- Async generators and not supported.
+- Async generators are not supported.
 - Won't work with IDLE, neither with REPL.
 
 Contribute
