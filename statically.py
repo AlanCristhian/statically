@@ -1,4 +1,5 @@
 import inspect
+import sys
 import warnings
 
 import cython
@@ -6,6 +7,10 @@ import cython
 
 __all__ = ["typed"]
 __version__ = "1.0a1"
+
+
+# async generators only present in Python 3.6+
+has_async_gen_fun = (3, 6) <= sys.version_info[:2]
 
 
 def _get_source_code(obj):
@@ -18,7 +23,7 @@ def _get_source_code(obj):
         extra_spaces = lines[0].find("@")
         return "".join(l[extra_spaces:] for l in lines[1:])
     else:
-        message = f"Function or class expected, got {type(obj).__name__}."
+        message = "Function or class expected, got {}.".format(type(obj).__name__)
         raise TypeError(message)
 
 
@@ -55,7 +60,7 @@ def typed(obj):
             two: int = 2
             return x + two
     """
-    if inspect.isasyncgenfunction(obj):
+    if has_async_gen_fun and inspect.isasyncgenfunction(obj):
         raise TypeError("Async generator funcions are not supported.")
     source = _get_source_code(obj)
     frame = inspect.currentframe().f_back

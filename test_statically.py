@@ -10,6 +10,9 @@ ONE_HUNDRED = 100
 execute = asyncio.get_event_loop().run_until_complete
 
 
+def is_cython_function(obj):
+    return 'cython_function_or_method' in str(type(obj))
+
 def anext(agen):
     gen = agen.asend(None)
     try:
@@ -24,6 +27,12 @@ class CompilationSuite(unittest.TestCase):
         def identity(x: cython.int):
             return x
         self.assertEqual(identity(14), 14)
+
+    def test_is_compiled(self):
+        @statically.typed
+        def compiled(x: cython.int):
+            return x
+        self.assertTrue(is_cython_function(compiled))
 
     def test_non_local_var_in_class(self):
         one = 1
@@ -94,12 +103,11 @@ class CompilationSuite(unittest.TestCase):
             return ONE_HUNDRED + x
         self.assertEqual(execute(add_one_hundred(5)), 105)
 
+    @unittest.skipUnless(statically.has_async_gen_fun, "Test does not apply for this version of Python")
     def test_async_generator(self):
         message = r"Async generator funcions are not supported."
         with self.assertRaisesRegex(TypeError, message):
-            @statically.typed
-            async def generator():
-                yield
+             from test_statically_async import generator
 
 
 if __name__ == '__main__':
