@@ -32,6 +32,27 @@ class A:
         self.b = b
 ```
 
+Python 3.5 or less supports type hints in the parameters but not in the body
+of the code. Read the next case:
+
+```python
+@statically.typed
+def sum_powers(x: cython.int):
+    return sum([x**n for n in range(1, x + 1)])
+```
+
+Works, but provides just a 5% increase in speed over the Python equivalent
+because the `n` variable is not annotated. In this case you can declare
+the type of the variable in the parameter with a default value.
+
+```python
+@statically.typed
+def sum_powers(x: cython.int, n: cython.int = 0):
+    return sum([x**n for n in range(1, x + 1)])
+```
+
+For this function I got more than 1,400% speed increase.
+
 ## Installation
 
 ```shell
