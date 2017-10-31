@@ -57,7 +57,7 @@ Caveats
 -------
 
 - Async generators are not supported.
-- Won't work with IDLE, neither with REPL.
+- Won't work with IDLE or REPL. Instead it works with `IPython shell <http://ipython.readthedocs.io/en/stable/>`
 
 Contribute
 ----------
