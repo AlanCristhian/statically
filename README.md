@@ -62,7 +62,7 @@ $ pip install git+https://github.com/AlanCristhian/statically.git
 ## Caveats
 
 - Async generators are not supported.
-- In contexts that doesn't have file - IDLE or REPL - will fallback to normal Python code. Works fine with [IPython](http://ipython.readthedocs.io/en/stable/).
+- In contexts that doesn't have file - IDLE or REPL - will fallback to normal Python code. Works fine with [IPython shell](http://ipython.readthedocs.io/en/stable/).
 
 ## Contribute
 
