@@ -1,7 +1,16 @@
 import unittest
 import asyncio
+import subprocess
+import sys
+import os.path
 
 import cython
+try:
+    import IPython
+except ImportError:
+    ipython_installed = False
+else:
+    ipython_installed = True
 
 import statically
 
@@ -12,6 +21,7 @@ execute = asyncio.get_event_loop().run_until_complete
 
 def is_cython_function(obj):
     return 'cython_function_or_method' in str(type(obj))
+
 
 def anext(agen):
     gen = agen.asend(None)
@@ -108,6 +118,23 @@ class CompilationSuite(unittest.TestCase):
         message = r"Async generator funcions are not supported."
         with self.assertRaisesRegex(TypeError, message):
              from test_statically_async import generator
+
+
+@unittest.skipUnless(ipython_installed, "IPython not installed")
+class IPythonSuite(unittest.TestCase):
+    def test_ipython(self):
+        base_dir = os.path.dirname(sys.executable)
+        executable = os.path.join(base_dir, "ipython")
+        process = subprocess.Popen([executable], stdin=subprocess.PIPE,
+                                   stdout=subprocess.PIPE)
+        script = "import statically\n" \
+                 "@statically.typed\n" \
+                 "def add(a: int, b: int): return a + b\n\n" \
+                 "'cython_function_or_method' in str(type(add))\n".encode()
+        stdout, _ = process.communicate(script)
+        lines = stdout.decode().split("\n")
+        process.terminate()
+        self.assertEqual(lines[-4], "In [3]: Out[3]: True")
 
 
 if __name__ == '__main__':
