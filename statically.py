@@ -13,6 +13,21 @@ __version__ = "1.0a2"
 has_async_gen_fun = (3, 6) <= sys.version_info[:2]
 
 
+def _can_cython_inline():
+    """Checks whether we are in a context which makes it possible to compile code inline with Cython.
+
+    Currently it is known that standard REPL and IDLE can't do that.
+    """
+    import __main__ as main
+
+    # statically works with IPython
+    if hasattr(main, 'get_ipython'):
+        return True
+
+    # standard REPL doesn't have __file__
+    return hasattr(main, '__file__')
+
+
 def _get_source_code(obj):
     if inspect.isclass(obj):
         lines = inspect.getsourcelines(obj)[0]
@@ -60,8 +75,11 @@ def typed(obj):
             two: int = 2
             return x + two
     """
-    if has_async_gen_fun and inspect.isasyncgenfunction(obj):
+    if not _can_cython_inline():
+        return obj
+    elif has_async_gen_fun and inspect.isasyncgenfunction(obj):
         raise TypeError("Async generator funcions are not supported.")
+
     source = _get_source_code(obj)
     frame = inspect.currentframe().f_back
     if inspect.isclass(obj):
@@ -73,3 +91,11 @@ def typed(obj):
         compiled = cython.inline(source, locals=locals_,
                                  globals=frame.f_globals, quiet=True)
         return compiled[obj.__name__]
+
+
+if not _can_cython_inline():
+    warnings.warn(
+        "Current code isn't launched from a file so statically.typed isn't able to cythonize stuff."
+        "Falling back to normal Python code.",
+        RuntimeWarning
+    )
